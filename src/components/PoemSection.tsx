@@ -32,17 +32,29 @@ const poemLines = [
   "Not their sacrifice.",
 ];
 
+// 🔹 Controls how much of the scroll is used to reveal the poem
+const REVEAL_END = 0.65;
+
 const PoemSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"],
   });
 
-  // Images fade in slightly earlier
-const bloodOpacity = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [0, 0.25, 0.5]);
-const kaliOpacity = useTransform(scrollYProgress, [0.4, 0.7, 1], [0, 0.2, 0.45]);
+  // Background images
+  const bloodOpacity = useTransform(
+    scrollYProgress,
+    [0.2, 0.5, 0.8],
+    [0, 0.25, 0.5]
+  );
 
+  const kaliOpacity = useTransform(
+    scrollYProgress,
+    [0.4, 0.7, 1],
+    [0, 0.2, 0.45]
+  );
 
   return (
     <section
@@ -58,7 +70,7 @@ const kaliOpacity = useTransform(scrollYProgress, [0.4, 0.7, 1], [0, 0.2, 0.45])
           src={bloodSpillImage}
           alt="Blood stains"
           className="w-full h-full object-cover"
-          style={{ mixBlendMode: 'multiply', objectPosition: 'center top' }}
+          style={{ mixBlendMode: "multiply", objectPosition: "center top" }}
         />
       </motion.div>
 
@@ -71,7 +83,7 @@ const kaliOpacity = useTransform(scrollYProgress, [0.4, 0.7, 1], [0, 0.2, 0.45])
           src={kaliImage}
           alt="Kali"
           className="max-w-[80%] max-h-[70%] object-contain"
-          style={{ mixBlendMode: 'multiply' }}
+          style={{ mixBlendMode: "multiply" }}
         />
       </motion.div>
 
@@ -79,8 +91,8 @@ const kaliOpacity = useTransform(scrollYProgress, [0.4, 0.7, 1], [0, 0.2, 0.45])
       <div className="max-w-2xl mx-auto sticky top-24 relative z-10">
         <div>
           {poemLines.map((line, index) => {
-            const start = index / (poemLines.length + 2);
-            const end = (index + 1) / (poemLines.length + 2);
+            const start = (index / poemLines.length) * REVEAL_END;
+            const end = ((index + 1) / poemLines.length) * REVEAL_END;
 
             return (
               <PoemLine
