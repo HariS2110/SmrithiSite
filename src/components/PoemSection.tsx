@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import kaliImage from "@/assets/kali.jpg";
+import bloodSpillImage from "@/assets/blood-spill.jpg";
 
 const poemLines = [
   "Mother, they called me the Lakshmi of this house,",
@@ -37,17 +39,49 @@ const PoemSection = () => {
     offset: ["start center", "end center"],
   });
 
+  // Images fade in slightly earlier
+const bloodOpacity = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [0, 0.25, 0.5]);
+const kaliOpacity = useTransform(scrollYProgress, [0.4, 0.7, 1], [0, 0.2, 0.45]);
+
+
   return (
     <section
       ref={containerRef}
-      className="min-h-[200vh] bg-ivory py-32 px-6 md:px-12"
+      className="min-h-[200vh] bg-ivory py-32 px-6 md:px-12 relative overflow-hidden"
     >
-      <div className="max-w-2xl mx-auto sticky top-24">
+      {/* Blood stains */}
+      <motion.div
+        style={{ opacity: bloodOpacity }}
+        className="absolute inset-0 pointer-events-none z-0"
+      >
+        <img
+          src={bloodSpillImage}
+          alt="Blood stains"
+          className="w-full h-full object-cover"
+          style={{ mixBlendMode: 'multiply', objectPosition: 'center top' }}
+        />
+      </motion.div>
+
+      {/* Kali image */}
+      <motion.div
+        style={{ opacity: kaliOpacity }}
+        className="absolute inset-0 pointer-events-none z-5 flex items-center justify-center"
+      >
+        <img
+          src={kaliImage}
+          alt="Kali"
+          className="max-w-[80%] max-h-[70%] object-contain"
+          style={{ mixBlendMode: 'multiply' }}
+        />
+      </motion.div>
+
+      {/* Poem content */}
+      <div className="max-w-2xl mx-auto sticky top-24 relative z-10">
         <div>
           {poemLines.map((line, index) => {
             const start = index / (poemLines.length + 2);
             const end = (index + 1) / (poemLines.length + 2);
-            
+
             return (
               <PoemLine
                 key={index}
@@ -75,13 +109,11 @@ const PoemLine = ({ line, scrollYProgress, start, end }: PoemLineProps) => {
   const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
   const y = useTransform(scrollYProgress, [start, end], [20, 0]);
 
-  if (line === "") {
-    return <div className="h-8" />;
-  }
+  if (line === "") return <div className="h-8" />;
 
   return (
     <motion.p
-      style={{ opacity, y, fontSize: 'clamp(0.875rem, 1.5vw, 1.25rem)' }}
+      style={{ opacity, y, fontSize: "clamp(0.875rem, 1.5vw, 1.25rem)" }}
       className="font-serif text-charcoal leading-relaxed italic"
     >
       {line}
