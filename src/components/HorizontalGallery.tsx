@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Play, Image, QrCode } from "lucide-react";
+import posterImage from "@/assets/poster.jpg";
+
 
 const HorizontalGallery = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -102,15 +104,16 @@ const HorizontalGallery = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 max-w-5xl w-full">
 
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-ivory border border-border rounded-xl p-8 shadow-lg w-full max-w-sm"
-              >
-                <div className="flex flex-col items-center justify-center h-72 md:h-96 text-charcoal">
-                  <Image className="w-20 h-20 mb-6 opacity-30" />
-                  <p className="font-serif mb-2 text-2xl">Poster</p>
-                  <p className="text-muted-foreground text-sm">Coming soon</p>
-                </div>
-              </motion.div>
+  whileHover={{ scale: 1.02 }}
+  className="bg-ivory border border-border rounded-xl shadow-lg w-full max-w-sm overflow-hidden"
+>
+  <img
+    src={posterImage}
+    alt="Film poster"
+    className="w-full h-full object-cover"
+  />
+</motion.div>
+
 
               <motion.div
                 whileHover={{ scale: 1.02 }}
