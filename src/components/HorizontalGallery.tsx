@@ -1,8 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Play, Image, QrCode } from "lucide-react";
+import { Play, QrCode } from "lucide-react";
 import posterImage from "@/assets/poster.jpg";
-
+import bloodHorizontal from "@/assets/bloodhorizontal.jpg";
 
 const HorizontalGallery = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,8 +31,19 @@ const HorizontalGallery = () => {
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
 
   return (
-    <section ref={containerRef} className="h-[400vh] bg-background relative">
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+    <section ref={containerRef} className="h-[400vh] bg-background relative z-10">
+
+      {/* BLOOD BACKGROUND INSIDE HORIZONTAL PANEL ONLY */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <img
+          src={bloodHorizontal}
+          alt=""
+          className="w-full h-full object-cover opacity-30 scale-105"
+          style={{ mixBlendMode: "multiply" }}
+        />
+      </div>
+
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center relative z-10">
         <motion.div ref={scrollRef} style={{ x }} className="flex gap-0">
 
           {/* Video Panel */}
@@ -53,7 +64,6 @@ const HorizontalGallery = () => {
           {/* Essay Panel */}
           <div className="w-screen h-screen flex-shrink-0 flex items-center justify-center px-8 md:px-16">
             <div className="max-w-3xl w-full">
-
               <h3
                 style={{ fontSize: "clamp(1.25rem, 2.5vw, 2rem)" }}
                 className="font-serif text-charcoal mb-6"
@@ -68,14 +78,10 @@ const HorizontalGallery = () => {
                 <p>
                   This film examines the patriarchal gaze as more than something men impose.
                   It is also something women can internalise and turn upon themselves.
-                  Looking becomes a discipline: a way of measuring, correcting, and containing
-                  the feminine body.
                 </p>
 
                 <p>
                   The film insists that a ‘female gaze’ is not inherently liberatory.
-                  When femininity is shaped to be seen, approved, and controlled,
-                  the same hierarchies quietly reassert themselves.
                 </p>
               </div>
 
@@ -84,8 +90,7 @@ const HorizontalGallery = () => {
                   style={{ fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)" }}
                   className="font-serif text-charcoal leading-snug"
                 >
-                  “They called me the Lakshmi of this house…
-                  <br />
+                  “They called me the Lakshmi of this house…<br />
                   and then they took my wings.”
                 </p>
               </div>
@@ -104,16 +109,15 @@ const HorizontalGallery = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 max-w-5xl w-full">
 
               <motion.div
-  whileHover={{ scale: 1.02 }}
-  className="bg-ivory border border-border rounded-xl shadow-lg w-full max-w-sm overflow-hidden"
->
-  <img
-    src={posterImage}
-    alt="Film poster"
-    className="w-full h-full object-cover"
-  />
-</motion.div>
-
+                whileHover={{ scale: 1.02 }}
+                className="bg-ivory border border-border rounded-xl shadow-lg w-full max-w-sm overflow-hidden"
+              >
+                <img
+                  src={posterImage}
+                  alt="Film poster"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
 
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -154,25 +158,10 @@ const HorizontalGallery = () => {
               style={{ fontSize: "clamp(0.85rem, 1.2vw, 1rem)" }}
               className="text-muted-foreground leading-relaxed space-y-4"
             >
-              <p>
-                The opening image is a goddess statue, still, sacred, idolised.
-                Divinity slips into flesh as she becomes human.
-              </p>
-
-              <p>
-                A society that prays to the Goddess can still restrict living women.
-                Cultural symbols become double-edged.
-              </p>
-
-              <p>
-                Braiding the hair becomes a quiet act of restraint —
-                beauty reshaped into compliance.
-              </p>
-
-              <p>
-                Kali is not fear. She is courage —
-                the goddess within every woman.
-              </p>
+              <p>The opening image is a goddess statue, still, sacred, idolised.</p>
+              <p>A society that prays to the Goddess can still restrict living women.</p>
+              <p>Braiding the hair becomes a quiet act of restraint.</p>
+              <p>Kali is not fear. She is courage.</p>
             </div>
           </motion.div>
         </div>
